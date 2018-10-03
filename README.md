@@ -1,3 +1,6 @@
+# Angular6-Bootsrap-JWT
+Bootsrap ile UI tasarımı ve datatable kullanımını içerir ve authentication'ı JWT ile yapar.
+
 Projeyi IDE üzerinde açtıktan sonra console ekranından 
 npm install 
 Komutunu girerek package.json dosyasındaki bağımlılıkların yüklenmesini sağlayabilirsiniz.

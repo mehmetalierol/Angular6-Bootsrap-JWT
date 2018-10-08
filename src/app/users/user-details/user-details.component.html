@@ -1,0 +1,137 @@
+<app-header></app-header>
+
+<div class="container-fluid">
+    <div class="row">
+
+<app-sidebar></app-sidebar>
+
+<main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2">Kullanıcı Detay</h1>
+    </div>
+
+    <div [hidden]="!isError" name="divAlert" id="divAlert" class="alert alert-danger alert-dismissible fade show" role="alert">
+            <strong>Hata oluştu!</strong> 
+            {{pageMessage}}
+            <button type="button" class="close" (click)="this.isError = false" style="padding-top: 8px;">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+
+    <div *ngIf="isSuccess" name="divAlert" id="divSuccess" class="alert alert-success alert-dismissible fade show" role="alert">
+                <strong>İşlem başarılı!</strong> 
+                {{pageMessage}}
+                <button type="button" class="close" (click)="this.isSuccess = false" style="padding-top: 8px;">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+
+    <div class="row">
+        <div class="col-lg-12">
+          
+            <div class="form-group">
+                <label>Kullanıcı Id : </label> 
+                <b> {{ (user && user.id) ? user.id : ''}}</b>
+            </div>
+
+            <div class="form-group">
+                <label>Email : </label>
+                <b> {{ (user && user.email) ? user.email : ''}}</b>
+            </div>
+
+            <div class="form-group">
+                <label>Telefon : </label>
+                <b> {{ (user && user.phoneNumber) ? user.phoneNumber : ''}}</b>
+            </div>
+
+            <div class="form-group">
+                <label>Ünvan : </label>
+                <b> {{ (user && user.title) ? user.title : ''}}</b>
+            </div>
+
+            <div class="form-group">
+                <label>Seçili Dil : </label>
+                <b> {{ (user && user.language) ? user.language.name : ''}}</b>
+            </div>
+
+            <div class="form-group">
+                <a onclick="$('#roleAddModal').modal('show');" style="color:#007bff;font-weight: bold;cursor:pointer;"><i class="fa fa-plus-square"></i> Yeni Rol Ekle</a><br>
+                <label> Roller : </label> 
+                <ul *ngIf="user">
+                        <li *ngFor="let role of user.userRoles"><a (click)="deleteRol(user.id, role)" style="color:#C70039;font-weight: bold;cursor:pointer;"><i class="fa fa-minus-square"></i> Sil</a> - {{role}}</li>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+
+    <hr class="mb-4">
+
+    <div class="row">
+        <div class="col-md-3 mb-3">
+            <button class="btn btn-success btn-lg btn-block" (click)="this.router.navigate(['/user/update', user.id])" type="button">Güncelle</button>
+        </div>
+        <div class="col-md-3 mb-3">
+            <button class="btn btn-primary btn-lg btn-block" (click)="this.router.navigate(['/user/change-password', user.id])" type="button">Parola Değiştir</button>
+          </div>
+          <div class="col-md-3 mb-3">
+            <button class="btn btn-danger btn-lg btn-block" onclick="$('#warningModel').modal('show');" type="button">Kullanıcıyı Sil</button>
+          </div>
+          <div class="col-md-3 mb-3">
+            <button class="btn btn-default btn-lg btn-block" (click)="this.router.navigateByUrl('/home')" type="button">Listeye Dön</button>
+          </div>
+      </div>
+
+</main>
+<!-- Delete Modal -->
+<div class="modal fade" id="warningModel" tabindex="-1" role="dialog" aria-labelledby="warningModelLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="warningModelLabel">Onay kutusu</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body" id="modalMessage">
+           Kullanıcı silinecek onaylıyor musunuz?
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Kapat</button>
+          <button type="button" class="btn btn-danger" (click)="deleteUser(user.id)" onclick="$('#warningModel').modal('hide');">Kullanıcıyı Sil</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Role Add Modal -->
+<div class="modal fade" id="roleAddModal" tabindex="-1" role="dialog" aria-labelledby="roleAddModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="roleAddModalLabel">Role Ekleme Ekranı</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body" id="modalMessage">
+               Lütfen eklemek istediğiniz rolu seçiniz!
+               <div class="input-group" style="margin-top:10px;">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><i class="fas fa-project-diagram"></i></span>
+                    </div>
+                <select class="custom-select d-block" [(ngModel)]="roleValue" (change)="this.selectedRole = $event.target.value.substring(3)" required>
+                  <option *ngFor="let role of roles" [ngValue]="role.id">{{role.name}}</option>
+                </select>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Kapat</button>
+              <button type="button" class="btn btn-primary" (click)="addRole(user.id)" onclick="$('#roleAddModal').modal('hide');">Role Ekle</button>
+            </div>
+          </div>
+        </div>
+      </div>
+</div>
+</div>

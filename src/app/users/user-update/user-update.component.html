@@ -1,0 +1,99 @@
+<app-header></app-header>
+
+<div class="container-fluid">
+    <div class="row">
+
+<app-sidebar></app-sidebar>
+
+<main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2">Kullanıcı Güncelle</h1>
+      </div>
+      <div *ngIf="isError" name="divAlert" class="alert alert-danger alert-dismissible fade show" role="alert">
+          <strong>Kullanıcı Güncellenemedi!</strong> Hata mesajı : {{ message }}
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close" style="padding-top: 8px;">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+<form #f="ngForm" (ngSubmit)="OnSubmit(user)">
+    <div class="mb-3">
+      <label for="userName">Kullanıcı Adı</label>
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <span class="input-group-text"><i class="fa fa-user"></i></span>
+        </div>
+        <input type="text" class="form-control" required minlength="3" maxlength="40" [(ngModel)]="user.userName" #userName="ngModel" name="userName" placeholder="Kullanıcı Adı" autofocus>
+        <div class="invalid-feedback" style="width: 100%; display: block; font-size: 100%; font-weight: bold;">
+            <span *ngIf="userName.errors?.required && userName.touched">Lütfen kullanıcı adı girin!</span>
+            <span *ngIf="userName.errors?.minlength && userName.touched">Kullanıcı en az 3 ve en fazla 40 karakter olmalıdır!</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="mb-3">
+        <label for="userName">Email</label>
+        <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text"><i class="fa fa-envelope"></i></span>
+            </div>
+            <input type="text" [disabled]="true" class="form-control" maxlength="40" [email]="user.email !== ''" [(ngModel)]="user.email" name="email" #email="ngModel">
+          </div>
+    </div>
+
+    <div class="mb-3">
+      <label for="phoneNumber">Telefon Numarası</label>
+      <div class="input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text"><i class="fa fa-phone"></i></span>
+          </div>
+          <input type="text" class="form-control" required minlength="3" maxlength="40" [(ngModel)]="user.phoneNumber" #phoneNumber="ngModel" name="phoneNumber" placeholder="Telefon Numarası">
+          <div  class="invalid-feedback" style="width: 100%; display: block; font-size: 100%; font-weight: bold;">
+              <span *ngIf="phoneNumber.errors?.required && phoneNumber.touched">Lütfen telefon numarası girin!</span>
+              <span *ngIf="phoneNumber.errors?.minlength && phoneNumber.touched">Telefon numarası en az 3 ve en fazla 40 karakter olmalıdır!</span>
+          </div>
+        </div>
+    </div>
+
+    <div class="mb-3">
+        <label for="title">Ünvan</label>
+        <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text"><i class="fab fa-audible"></i></span>
+            </div>
+            <input type="text" class="form-control" required minlength="3" maxlength="40" [(ngModel)]="user.title" #title="ngModel" name="title" placeholder="Ünvan">
+            <div class="invalid-feedback" style="width: 100%; display: block; font-size: 100%; font-weight: bold;">
+                <span *ngIf="title.errors?.required && title.touched">Lütfen ünvan girin!</span>
+                <span *ngIf="title.errors?.minlength && title.touched">Ünvan en az 6 ve en fazla 40 karakter olmalıdır!</span>
+            </div>
+          </div>
+      </div>
+
+      <div class="mb-3">
+        <label for="langId">Dil Seçimi</label>
+        <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text"><i class="fas fa-language"></i></span>
+            </div>
+        <select class="custom-select d-block" [(ngModel)]="user.languageId" #languageId="ngModel" name="languageId">
+          <option *ngFor="let language of languages" [ngValue]="language.id" [selected]="language.id == user.languageId">{{language.name}}</option>
+        </select>
+      </div>
+      </div>
+
+    <span *ngIf="!f.valid" style="color:red;font-weight: bold;">Tüm alanları doldurmalısınız!</span>
+    <hr class="mb-4">
+
+    <div class="row">
+      <div class="col-md-9 mb-3">
+        <input class="btn btn-primary btn-lg btn-block" [disabled]="!f.valid" type="submit" value="Kullanıcıyı Güncelle">
+      </div>
+      <div class="col-md-3 mb-3">
+          <button class="btn btn-danger btn-lg btn-block" (click)="this.router.navigateByUrl('/home')" type="button">Vazgeç</button>
+        </div>
+    </div>
+  </form>
+</main>
+
+</div>
+</div>

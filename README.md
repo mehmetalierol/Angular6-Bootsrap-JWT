@@ -1,27 +1,15 @@
-# SirketUygulamaWebUI
+# Angular6-Bootsrap-JWT
+Bootsrap ile UI tasarımı ve datatable kullanımını içerir ve authentication'ı JWT ile yapar.
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.1.4.
+Projeyi IDE üzerinde açtıktan sonra console ekranından 
+npm install 
+Komutunu girerek package.json dosyasındaki bağımlılıkların yüklenmesini sağlayabilirsiniz.
+Daha sonra 
+npm run serve
+ya da angular cli kullanıyorsanız
+ng serve -o
+yazarak uygulamayı çalıştırabilirsiniz.
 
-## Development server
-
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
-
-## Code scaffolding
-
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+Bu frontend projesi github sayfam üzerinde bulunan Net-Core-2-1-WebApi backend projesi baz alınarak geliştirilmiştir.
+Projeyi tam olarak test etmek için backend projesini indirip çalıştırabilir ve bu proje içinde bulunan servislerin
+api url lerini değiştirebilirsiniz.
